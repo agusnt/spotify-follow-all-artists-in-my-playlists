@@ -20,13 +20,13 @@ class SpotifyConn:
         self.playlist_tracks = []
 
     def init_conn(self, username):
-        scope = "user-follow-modify"
+        scope = ("user-follow-modify", "playlist-read-private")
         token = util.prompt_for_user_token(username,scope,redirect_uri='http://localhost')
         
         if token:
             return spotipy.Spotify(auth=token)
         else: 
-            print "Can't get token for ", username
+            print("Can't get token for ", username)
             sys.exit(1)
 
     def get_playlist_ids(self, exclude_playlist_ids, exclude_playlist_names):
@@ -104,4 +104,4 @@ for batch in batches:
     if batch:
         sp.follow_artists(batch)
 
-print "Succesfully followed " + len(artists) + " artists!"
+print("Succesfully followed {} artists!".format(len(artists)))
